@@ -10,6 +10,10 @@ The Google app was left in Testing. Google expires the login after seven days wi
 
 Error 403 `org_internal`. The Google Cloud project is owned by a Workspace organization and its consent screen is Internal, so only that company's own addresses can authorize it. Either make a fresh project while signed in as the address the agent will use, or switch that project's audience to External and publish. See docs/GOOGLE-OAUTH.md.
 
+## 1c. The login says the app "has not completed the Google verification process"
+
+Error 403 `access_denied`. The app is in Testing and your address is not a listed tester. Go to the Audience page and press **Publish app**. Adding yourself as a test user also works but expires in seven days.
+
 ## 2. Works while you are logged in, dies when you disconnect
 
 `loginctl enable-linger YOURUSER` was never run. A systemd user service only lives while that user has a session unless linger is on. Same shape on WSL.
