@@ -16,7 +16,7 @@ Error 403 `access_denied`. The app is in Testing and your address is not a liste
 
 ## 1d. Publish app is greyed out
 
-On the Branding page, clear the app logo and fill in the developer contact email. A logo forces the app into verification, which is what disables Publish. Leave the homepage, privacy policy, terms and authorized domain fields empty.
+Check, in order: no app logo on Branding, developer contact email filled in, homepage and privacy policy and terms and authorized domains all empty, and no Gmail scopes listed on Data Access. If all of that is true and it is still greyed out, add yourself under Test users instead and move on. That works immediately. The login then expires after seven days, so sort publishing out when you are not in the middle of something.
 
 ## 2. Works while you are logged in, dies when you disconnect
 

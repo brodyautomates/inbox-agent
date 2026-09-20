@@ -38,13 +38,16 @@ Two ways out:
 
 ## Publish is greyed out
 
-Almost always one of these two, on the **Branding** page.
+Things to check on the **Branding** page, in order:
 
-**You uploaded an app logo.** Google's own note on that page says it: uploading a logo means the app must go through verification unless it is Internal or stays in Testing. Verification needs a homepage, a privacy policy, a terms page and a verified domain. Clear the logo field and Publish comes back. You do not need a logo for an app with one user.
+1. **No app logo.** Google's own note there says uploading one means the app must go through verification unless it is Internal or stays in Testing. Clear the field. An app with one user does not need a logo.
+2. **Developer contact email is filled in** and saved.
+3. Home page, privacy policy, terms of service and authorized domains all **empty**. They exist for verification, which you are not doing.
+4. On **Data Access**, no Gmail scopes listed. A Desktop app requests its permissions at login, so it does not need them declared here.
 
-**Developer contact information is empty.** The Email addresses field at the bottom of Branding is required. Fill it in and save.
+If all four are true and the button is still greyed out, do not keep fighting it. Use the test user path below, which works immediately, and come back to publishing later. Google's console does not explain this one and the state can be stale for a while after a change.
 
-Leave the home page, privacy policy, terms of service and authorized domain fields empty. They exist for verification, which you are not doing.
+**The test user path.** Audience page → **Test users** → **Add users** → your address → Save. The login works straight away. The cost is that a Testing app's login expires after seven days, so publish before you depend on it.
 
 ## "has not completed the Google verification process" (Error 403: access_denied)
 
