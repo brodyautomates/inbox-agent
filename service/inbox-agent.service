@@ -1,0 +1,27 @@
+# systemd user unit. Linux servers and Windows under WSL.
+#
+#   mkdir -p ~/.config/systemd/user
+#   cp service/inbox-agent.service ~/.config/systemd/user/
+#   # edit the two /home/YOU paths below, then:
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now inbox-agent
+#   loginctl enable-linger $USER        <-- not optional. Without it the bot dies when you log out.
+#
+#   systemctl --user status inbox-agent
+#   journalctl --user -u inbox-agent -f
+
+[Unit]
+Description=inbox-agent: reads mail, drafts replies, waits for your tap
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/home/YOU/inbox-agent
+EnvironmentFile=/home/YOU/.config/inbox-agent/env
+Environment=PATH=/home/YOU/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/YOU/inbox-agent/venv/bin/python3 -m bot.bot
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

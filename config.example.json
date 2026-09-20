@@ -1,0 +1,26 @@
+{
+  "_comment": "Copy to ~/.config/inbox-agent/config.json. Every key is optional except the first three.",
+
+  "gmail_address": "you@example.com",
+  "telegram_token": "123456789:paste-the-token-botfather-gave-you",
+  "allowed_user": 123456789,
+
+  "mode": "manual",
+  "autopilot_delay_minutes": 10,
+  "poll_seconds": 120,
+  "digest_hour": 8,
+
+  "ceiling_amount": 5000,
+  "currency_symbols": "$£€",
+  "assisted_max_words": 40,
+  "never_answer_keywords": ["contract", "equity", "revenue share", "call this week"],
+  "ignore_senders": ["noreply@", "no-reply@", "notifications@"],
+
+  "signoff_name": "Your Name",
+  "playbook_path": "playbook/SKILL.md",
+  "assisted_templates_path": "playbook/assisted-templates.md",
+
+  "claude_backend": "code",
+  "api_model": "claude-sonnet-5",
+  "claude_binary": ""
+}

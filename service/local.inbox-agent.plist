@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd agent for macOS. A Mac you leave on, or a Mac mini.
+
+    cp service/local.inbox-agent.plist ~/Library/LaunchAgents/
+    # edit every /Users/YOU path and paste your token below, then:
+    chmod 600 ~/Library/LaunchAgents/local.inbox-agent.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.inbox-agent.plist
+
+    # stop / start
+    launchctl bootout gui/$(id -u)/local.inbox-agent
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.inbox-agent.plist
+
+  Also stop the Mac sleeping:  sudo pmset -a sleep 0 ; sudo pmset -a disksleep 0
+
+  launchd does not read your shell profile, so the token goes here. That is
+  why the file is chmod 600 and why you keep it out of frame.
+-->
+<plist version="1.0"><dict>
+  <key>Label</key><string>local.inbox-agent</string>
+  <key>WorkingDirectory</key><string>/Users/YOU/inbox-agent</string>
+  <key>ProgramArguments</key><array>
+    <string>/Users/YOU/inbox-agent/venv/bin/python3</string>
+    <string>-m</string>
+    <string>bot.bot</string>
+  </array>
+  <key>EnvironmentVariables</key><dict>
+    <key>CLAUDE_CODE_OAUTH_TOKEN</key><string>paste_here_or_leave_blank_if_using_api</string>
+    <key>ANTHROPIC_API_KEY</key><string></string>
+    <key>PATH</key><string>/Users/YOU/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>KeepAlive</key><true/>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/Users/YOU/.config/inbox-agent/out.log</string>
+  <key>StandardErrorPath</key><string>/Users/YOU/.config/inbox-agent/err.log</string>
+</dict></plist>

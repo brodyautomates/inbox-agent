@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# never, under any circumstances
+config.json
+env
+.env
+token.json
+client_secret.json
+state.json
+state.json.tmp
+*.log
+mode
+PAUSED
+denylist.txt
