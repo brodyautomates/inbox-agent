@@ -2,6 +2,14 @@
 
 About four minutes. Do this on a machine with a browser.
 
+## Which path you are on
+
+Two kinds of Google account, two different amounts of work. Check which you have before you start.
+
+**A work account on your own domain (Google Workspace).** Set the audience to **Internal**. Only people on your domain can log in, which is just you. No publishing, no verification, no warning screen, and the login does not expire. Skip to step 6.
+
+**A plain gmail.com address.** Your account belongs to no organization, so Internal does not exist as an option. You take the External path below: publish the app, and click through one warning at login. It is four extra clicks and it is permanent once done.
+
 ## The clicks
 
 At [console.cloud.google.com](https://console.cloud.google.com), **logged in as the address the agent will send from**. Check the account avatar in the top right before you start. If you have both a personal address and a work one, picking the wrong account here is the most common way this goes wrong.
