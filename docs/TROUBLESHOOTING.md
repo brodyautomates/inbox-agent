@@ -14,6 +14,10 @@ Error 403 `org_internal`. The Google Cloud project is owned by a Workspace organ
 
 Error 403 `access_denied`. The app is in Testing and your address is not a listed tester. Go to the Audience page and press **Publish app**. Adding yourself as a test user also works but expires in seven days.
 
+## 1d. Publish app is greyed out
+
+On the Branding page, clear the app logo and fill in the developer contact email. A logo forces the app into verification, which is what disables Publish. Leave the homepage, privacy policy, terms and authorized domain fields empty.
+
 ## 2. Works while you are logged in, dies when you disconnect
 
 `loginctl enable-linger YOURUSER` was never run. A systemd user service only lives while that user has a session unless linger is on. Same shape on WSL.

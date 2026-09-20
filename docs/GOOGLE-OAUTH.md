@@ -16,7 +16,7 @@ At [console.cloud.google.com](https://console.cloud.google.com), **logged in as 
 
 1. New project. Name it anything. Use a new project, not one you already rely on.
 2. **APIs & Services → Enable APIs** → search **Gmail API** → Enable.
-3. **OAuth consent screen**, called **Google Auth Platform** in the newer console. Fill in Branding: app name, support email, developer email.
+3. **OAuth consent screen**, called **Google Auth Platform** in the newer console. On **Branding**, fill in app name, user support email, and the developer contact email at the bottom. Do not upload a logo and leave the home page, privacy policy, terms and authorized domain fields empty. A logo forces the app into Google's verification process.
 4. **Audience** → set it to **External**. A personal gmail account has no other option, which is correct.
 5. On that same Audience page, **Publish app**, and confirm. Status must read "In production", not "Testing". This is the one that matters. See below.
 6. **Clients** → **Create client** → Application type **Desktop app** → Create → **Download JSON**. In the older console this lives under **APIs & Services → Credentials**. If you close the panel, the download icon is on the client's row in the list.
@@ -35,6 +35,16 @@ Two ways out:
 
 - **Easiest.** Make a new project while signed in as the address the agent will actually use. A personal gmail account is not in an organization, so the Internal option does not exist and the problem cannot happen.
 - **Or** open that project's OAuth consent screen, find the audience setting, switch it from Internal to External, and publish. Only do this to a project nothing else depends on.
+
+## Publish is greyed out
+
+Almost always one of these two, on the **Branding** page.
+
+**You uploaded an app logo.** Google's own note on that page says it: uploading a logo means the app must go through verification unless it is Internal or stays in Testing. Verification needs a homepage, a privacy policy, a terms page and a verified domain. Clear the logo field and Publish comes back. You do not need a logo for an app with one user.
+
+**Developer contact information is empty.** The Email addresses field at the bottom of Branding is required. Fill it in and save.
+
+Leave the home page, privacy policy, terms of service and authorized domain fields empty. They exist for verification, which you are not doing.
 
 ## "has not completed the Google verification process" (Error 403: access_denied)
 
