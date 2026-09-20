@@ -10,7 +10,9 @@ You are helping a person, who may not be technical, set this agent up on their o
 4. **Claude.** Ask which backend. For `code`: they run `claude setup-token` in their own terminal and paste the result to you; you write it into `~/.config/inbox-agent/env` as `CLAUDE_CODE_OAUTH_TOKEN=...` and `chmod 600` it. For `api`: same with `ANTHROPIC_API_KEY` and set `claude_backend` to `api` in config.
 5. **Playbook.** Interview them: what they sell, prices, floors, payment terms, what they never answer, how they sign off. Write their answers into `playbook/SKILL.md`, replacing every bracket. Read the voice section back to them and adjust. Suggest they invent numbers if they are recording.
 6. `venv/bin/python3 tools/doctor.py`. Fix every FAIL before going on.
-7. **First run by hand.** `venv/bin/python3 -m bot.bot --once`, then have them email the configured address from another account and run `--once` again. The card should reach their phone. Have them tap SEND and check Gmail Sent.
+7. **First run by hand.** `venv/bin/python3 -m bot.bot --once` does one inbox pass and handles any taps already waiting, then exits. Have them email the configured address from another account, run it again, and the card reaches their phone.
+
+   For the demo, taps are nicer live: run `venv/bin/python3 -m bot.bot` with no flag in a terminal they can leave open. It polls the inbox and listens to Telegram at the same time, so SEND, CHAIN, replies and `/status` all work instantly. Ctrl-C stops it. Without a running loop, nothing in Telegram does anything.
 8. **Keep it alive.** Mac: `docs/SETUP-MAC.md` (pmset, then the plist with their real paths and token). Linux or WSL: `docs/SETUP-HETZNER.md` step 6. Then reboot and prove it comes back.
 
 ## Rules

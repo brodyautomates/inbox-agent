@@ -546,6 +546,30 @@ def cycle(st):
     S.save(st)
 
 
+def drain_updates(st, timeout=0):
+    """Handle every pending Telegram update. timeout=0 returns immediately,
+    which is what --once uses. Returns False if the API call failed."""
+    resp = tg.api("getUpdates", offset=st["offset"] + 1, timeout=timeout)
+    if not resp.get("ok"):
+        return False
+    for upd in resp["result"]:
+        st["offset"] = max(st["offset"], upd["update_id"])
+        frm = (upd.get("message") or upd.get("callback_query") or {}).get("from", {})
+        if frm.get("id") != int(C.load()["allowed_user"]):
+            C.log(f"dropped update from non-allowlisted user {frm.get('id')}")
+            continue                # first thing, before anything is read
+        try:
+            if "callback_query" in upd:
+                handle_callback(st, upd["callback_query"])
+            elif "message" in upd:
+                handle_text(st, upd["message"])
+        except Exception as e:
+            C.log(f"handler error: {e!r}")
+            tg.say(f"Handler error, draft untouched: {e!r}"[:300], tg.done_keyboard("err"))
+        S.save(st)
+    return True
+
+
 def main():
     cfg = C.load()
     if not cfg["telegram_token"] or not cfg["allowed_user"]:
@@ -554,31 +578,16 @@ def main():
     C.log(f"inbox-agent started, mode={C.mode()}, backend={cfg['claude_backend']}")
     if "--once" in sys.argv:
         cycle(st)
+        drain_updates(st)       # so taps and commands made before this run still work
+        S.save(st)
         return
     last = 0.0
     while True:
         if time.time() - last > int(C.load()["poll_seconds"]):
             cycle(st)
             last = time.time()
-        resp = tg.api("getUpdates", offset=st["offset"] + 1, timeout=50)
-        if not resp.get("ok"):
+        if not drain_updates(st, timeout=50):
             time.sleep(5)
-            continue
-        for upd in resp["result"]:
-            st["offset"] = max(st["offset"], upd["update_id"])
-            frm = (upd.get("message") or upd.get("callback_query") or {}).get("from", {})
-            if frm.get("id") != int(C.load()["allowed_user"]):
-                C.log(f"dropped update from non-allowlisted user {frm.get('id')}")
-                continue            # first thing, before anything is read
-            try:
-                if "callback_query" in upd:
-                    handle_callback(st, upd["callback_query"])
-                elif "message" in upd:
-                    handle_text(st, upd["message"])
-            except Exception as e:
-                C.log(f"handler error: {e!r}")
-                tg.say(f"Handler error, draft untouched: {e!r}"[:300], tg.done_keyboard("err"))
-            S.save(st)
 
 
 if __name__ == "__main__":
