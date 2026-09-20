@@ -4,15 +4,24 @@ About four minutes. Do this on a machine with a browser.
 
 ## The clicks
 
-At [console.cloud.google.com](https://console.cloud.google.com), logged in as the address the agent will send from:
+At [console.cloud.google.com](https://console.cloud.google.com), **logged in as the address the agent will send from**. Check the account avatar in the top right before you start. If you have both a personal address and a work one, picking the wrong account here is the most common way this goes wrong.
 
-1. New project. Name it anything.
+1. New project. Name it anything. Use a new project, not one you already rely on.
 2. **APIs & Services → Enable APIs** → search **Gmail API** → Enable.
 3. **OAuth consent screen** → External → fill the three required fields (app name, support email, developer email).
 4. Under **Test users**, add your own address.
 5. **PUBLISH APP.** This is the one that matters. See below.
 6. **Credentials → Create credentials → OAuth client ID** → Application type **Desktop app**.
 7. Download the JSON. Rename it `client_secret.json`. Put it in `~/.config/inbox-agent/` and `chmod 600` it.
+
+## "Access blocked: can only be used within its organization" (Error 403: org_internal)
+
+The project belongs to a Google Workspace organization and its consent screen audience is set to **Internal**, so only addresses on that company domain may authorize it. You are logging in with an address outside it, usually a personal gmail.
+
+Two ways out:
+
+- **Easiest.** Make a new project while signed in as the address the agent will actually use. A personal gmail account is not in an organization, so the Internal option does not exist and the problem cannot happen.
+- **Or** open that project's OAuth consent screen, find the audience setting, switch it from Internal to External, and publish. Only do this to a project nothing else depends on.
 
 ## The seven day thing
 

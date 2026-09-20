@@ -6,6 +6,10 @@ Every one of these happened on a real install. Each one is fast to find once you
 
 The Google app was left in Testing. Google expires the login after seven days with no error. Go to the OAuth consent screen, press **Publish**, run `gsend auth` again. Then `gsend test`.
 
+## 1b. The login says "can only be used within its organization"
+
+Error 403 `org_internal`. The Google Cloud project is owned by a Workspace organization and its consent screen is Internal, so only that company's own addresses can authorize it. Either make a fresh project while signed in as the address the agent will use, or switch that project's audience to External and publish. See docs/GOOGLE-OAUTH.md.
+
 ## 2. Works while you are logged in, dies when you disconnect
 
 `loginctl enable-linger YOURUSER` was never run. A systemd user service only lives while that user has a session unless linger is on. Same shape on WSL.
